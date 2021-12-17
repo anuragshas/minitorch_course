@@ -12,7 +12,7 @@ import math
 
 def mul(x, y):
     ":math:`f(x, y) = x * y`"
-    return x*y
+    return x * y
 
 
 def id(x):
@@ -22,7 +22,7 @@ def id(x):
 
 def add(x, y):
     ":math:`f(x, y) = x + y`"
-    return x+y
+    return x + y
 
 
 def neg(x):
@@ -32,22 +32,22 @@ def neg(x):
 
 def lt(x, y):
     ":math:`f(x) =` 1.0 if x is less than y else 0.0"
-    return 1.0 if x<y else 0.0
+    return 1.0 if x < y else 0.0
 
 
 def eq(x, y):
     ":math:`f(x) =` 1.0 if x is equal to y else 0.0"
-    return 1.0 if x==y else 0.0
+    return 1.0 if x == y else 0.0
 
 
 def max(x, y):
     ":math:`f(x) =` x if x is greater than y else y"
-    return x if x>y else y
+    return x if x > y else y
 
 
 def is_close(x, y):
     ":math:`f(x) = |x - y| < 1e-2` "
-    return math.fabs(x-y) < 1e-2
+    return math.fabs(x - y) < 1e-2
 
 
 def sigmoid(x):
@@ -68,10 +68,10 @@ def sigmoid(x):
     Returns:
         float : sigmoid value
     """
-    if x>=0:
-        return 1.0/(1.0+math.exp(-x))
+    if x >= 0:
+        return 1.0 / (1.0 + math.exp(- x))
     else:
-        return math.exp(x)/(1.0+math.exp(x))
+        return math.exp(x) / (1.0 + math.exp(x))
 
 
 def relu(x):
@@ -86,7 +86,7 @@ def relu(x):
     Returns:
         float : relu value
     """
-    return x if x>0.0 else 0.0
+    return x if x > 0.0 else 0.0
 
 
 EPS = 1e-6
@@ -104,22 +104,22 @@ def exp(x):
 
 def log_back(x, d):
     r"If :math:`f = log` as above, compute :math:`d \times f'(x)`"
-    return d*(1.0/x)
+    return d * (1.0 / x)
 
 
 def inv(x):
     ":math:`f(x) = 1/x`"
-    return 1.0/x
+    return 1.0 / x
 
 
 def inv_back(x, d):
     r"If :math:`f(x) = 1/x` compute :math:`d \times f'(x)`"
-    return d * (-1.0 / math.pow(x,2))
+    return d * (- 1.0 / math.pow(x, 2))
 
 
 def relu_back(x, d):
     r"If :math:`f = relu` compute :math:`d \times f'(x)`"
-    return d * 1.0 if x>0.0 else 0.0
+    return d * 1.0 if x > 0.0 else 0.0
 
 
 # ## Task 0.3

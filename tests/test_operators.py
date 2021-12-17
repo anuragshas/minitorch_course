@@ -115,33 +115,33 @@ def test_sigmoid(a):
 @given(small_floats, small_floats, small_floats)
 def test_transitive(a, b, c):
     "Test the transitive property of less-than (a < b and b < c implies a < c)"
-    if lt(a,b) and lt(b,c):
-        assert(lt(a,c))
+    if lt(a, b) and lt(b, c):
+        assert(lt(a, c))
 
 
 @pytest.mark.task0_2
-@given(small_floats,small_floats)
-def test_symmetric(a,b):
+@given(small_floats, small_floats)
+def test_symmetric(a, b):
     """
     Write a test that ensures that :func:`minitorch.operators.mul` is symmetric, i.e.
     gives the same value regardless of the order of its input.
     """
-    assert mul(a,b) == mul(b,a)
+    assert mul(a, b) == mul(b, a)
 
 
 @pytest.mark.task0_2
 @given(small_floats, small_floats, small_floats)
-def test_distribute(x,y,z):
+def test_distribute(x, y, z):
     r"""
     Write a test that ensures that your operators distribute, i.e.
     :math:`z \times (x + y) = z \times x + z \times y`
     """
-    assert_close(mul(z,add(x, y)), add(mul(z, x), mul(z, y)))
+    assert_close(mul(z, add(x, y)), add(mul(z, x), mul(z, y)))
 
 
 @pytest.mark.task0_2
 @given(small_floats, small_floats, small_floats)
-def test_other(a,b,c):
+def test_other(a, b, c):
     """
     Write a test that ensures some other property holds for your functions.
     """
