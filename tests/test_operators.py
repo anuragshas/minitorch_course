@@ -116,7 +116,7 @@ def test_sigmoid(a):
 def test_transitive(a, b, c):
     "Test the transitive property of less-than (a < b and b < c implies a < c)"
     if lt(a, b) and lt(b, c):
-        assert(lt(a, c))
+        assert lt(a, c)
 
 
 @pytest.mark.task0_2
@@ -148,6 +148,7 @@ def test_other(a, b, c):
     assert_close(mul(a, mul(b, c)), mul(mul(a, b), c))
     assert_close(add(a, add(b, c)), add(add(a, b), c))
 
+
 # ## Task 0.3  - Higher-order functions
 
 # These tests check that your higher-order functions obey basic
@@ -173,8 +174,7 @@ def test_sum_distribute(ls1, ls2):
     Write a test that ensures that the sum of `ls1` plus the sum of `ls2`
     is the same as the sum of each element of `ls1` plus each element of `ls2`.
     """
-    # TODO: Implement for Task 0.3.
-    raise NotImplementedError('Need to implement for Task 0.3')
+    assert_close(add(sum(ls1), sum(ls2)), sum(addLists(ls1, ls2)))
 
 
 @pytest.mark.task0_3
