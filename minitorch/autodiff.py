@@ -1,3 +1,4 @@
+from queue import Queue
 variable_count = 1
 
 
@@ -190,8 +191,7 @@ class History:
         Returns:
             list of numbers : a derivative with respect to `inputs`
         """
-        # TODO: Implement for Task 1.4.
-        raise NotImplementedError("Need to implement for Task 1.4")
+        return self.last_fn.chain_rule(self.ctx, self.inputs, d_output)
 
 
 class FunctionBase:
@@ -273,13 +273,11 @@ class FunctionBase:
         """
         # Tip: Note when implementing this function that
         # cls.backward may return either a value or a tuple.
-        back = cls.backward(ctx, d_output)
+        derivatives = wrap_tuple(cls.backward(ctx, d_output))
         result = []
-        if not isinstance(back, tuple):
-            back = [back]
-        for idx, val in enumerate(inputs):
+        for val, deriv in zip(inputs, derivatives):
             if not is_constant(val):
-                result.append((val, back[idx]))
+                result.append((val, deriv))
         return result
 
 
@@ -301,8 +299,20 @@ def topological_sort(variable):
         list of Variables : Non-constant Variables in topological order
                             starting from the right.
     """
-    # TODO: Implement for Task 1.4.
-    raise NotImplementedError("Need to implement for Task 1.4")
+    variable_queue = Queue()
+    variable_queue.put(variable)
+    result = []
+    while not variable_queue.empty():
+        cur_variable = variable_queue.get()
+        result.append(cur_variable)
+        if cur_variable.is_leaf():
+            continue
+        else:
+            backprop_result = cur_variable.history.backprop_step(1.0)
+            for var, _ in backprop_result:
+                variable_queue.put(var)
+    return result
+
 
 
 def backpropagate(variable, deriv):
@@ -318,5 +328,15 @@ def backpropagate(variable, deriv):
 
     No return. Should write to its results to the derivative values of each leaf through `accumulate_derivative`.
     """
-    # TODO: Implement for Task 1.4.
-    raise NotImplementedError("Need to implement for Task 1.4")
+    variable_queue = topological_sort(variable)
+    var_deriv_dict = {}
+    var_deriv_dict[variable_queue[0].unique_id] = deriv
+    for var in variable_queue:
+        if var.is_leaf():
+            var.accumulate_derivative(var_deriv_dict[var.unique_id])
+        else:
+            backprop_result = var.history.backprop_step(var_deriv_dict[var.unique_id])
+            for vri, der in backprop_result:
+                var_deriv_dict[vri.unique_id] = der
+
+
